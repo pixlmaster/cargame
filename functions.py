@@ -33,6 +33,10 @@ def car(x,y):
 	#display car on screen
 	gamedisplay.blit(carimg,(x,y))
 
-def crash():
-	#message on crashing
-	message_display("You Crashed")
+
+def mouse_display(rectx,recty,rectw,recth):
+	mouse=pygame.mouse.get_pos()
+	if rectx+rectw > mouse[0] > rectx and recty+recth > mouse[1] > recty:
+		return True
+	else:
+		return False
