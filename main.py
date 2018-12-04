@@ -2,21 +2,10 @@ import pygame
 import time
 import random
 
+from constants import *
+from functions import *
+
 pygame.init()
-
-#display resolutions
-display_width =800
-display_height = 600
-
-
-#colours
-black = (0,0,0)
-white = (255,255,255)
-red = (255,0,0)
-
-#car dimensions
-car_width=73
-car_height=86
 
 # resolution
 gamedisplay = pygame.display.set_mode((display_width,display_height))
@@ -24,7 +13,6 @@ gamedisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('A bit Racey')
 # in game clock
 clock=pygame.time.Clock()
-
 #load image of car
 carimg = pygame.image.load('racecar.png')
 
@@ -83,18 +71,18 @@ def game_loop():
 	game_exit = False
 	#game loop
 	while not game_exit:
-
+		#if user presses exit
 		for event in pygame.event.get():
 			if event.type==pygame.QUIT:
 				pygame.quit()
 				quit()
-
+			#on pressing left or right key
 			if(event.type == pygame.KEYDOWN):
 				if event.key == pygame.K_LEFT:
 					x_change=-10
 				elif event.key ==pygame.K_RIGHT:
 					x_change = 10
-
+			#if key is not pressed
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 					x_change = 0
