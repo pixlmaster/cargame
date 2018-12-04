@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 pygame.init()
 
@@ -11,6 +12,7 @@ white = (255,255,255)
 red = (255,0,0)
 
 car_width=73
+car_height=86
 
 # resolution
 gamedisplay = pygame.display.set_mode((display_width,display_height))
@@ -21,6 +23,9 @@ clock=pygame.time.Clock()
 # not crashed
 
 carimg = pygame.image.load('racecar.png')
+
+def things(thingx,thingy,thingw, thingh, color):
+	pygame.draw.rect(gamedisplay,color ,[thingx, thingy,thingw,thingh])
 
 def text_objects(text,font):
 	textsurface=font.render(text,True,black)
@@ -50,6 +55,11 @@ def game_loop():
 	y= (display_height*0.8)
 
 	x_change=0
+	thing_startx = random.randrange(0,display_width)
+	thing_starty = -600
+	thing_speed = 7
+	thing_width = 100
+	thing_height = 100
 
 	game_exit = False
 
@@ -72,10 +82,21 @@ def game_loop():
 
 		x +=x_change
 		gamedisplay.fill(white)
+		things(thing_startx,thing_starty, thing_width, thing_height, black)
+		thing_starty += thing_speed
+
 		car(x,y)
 
 		if x<=0 or x>=display_width-car_width :
 			crash()
+
+		if thing_starty > display_height:
+			thing_starty = 0 - thing_height
+			thing_startx=random.randrange(0,display_width)
+
+		if y<thing_starty+ thing_height and thing_starty<y+car_height:
+			if x +car_width> thing_startx and x<thing_startx+thing_width:
+				crash()
 
 		pygame.display.update()
 
