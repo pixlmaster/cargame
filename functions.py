@@ -5,6 +5,12 @@ from constants import *
 
 # resolution
 gamedisplay = pygame.display.set_mode((display_width,display_height))
+# change title name
+pygame.display.set_caption('A bit Racey')
+# in game clock
+clock=pygame.time.Clock()
+#load image of car
+carimg = pygame.image.load('racecar.png')
 
 def things_dodged(count):
 	#displays dodge count
@@ -22,19 +28,6 @@ def text_objects(text,font):
 	#renders text with particular font and returns it
 	textsurface=font.render(text,True,black)
 	return textsurface,textsurface.get_rect()
-
-def message_display(text):
-	#displays a message
-	largetext=pygame.font.Font('freesansbold.ttf',115)
-	textsurf,textrect= text_objects(text,largetext)
-	textrect.center = (display_width/2),(display_height/2)
-	gamedisplay.blit(textsurf,textrect)
-
-	pygame.display.update()
-
-	time.sleep(2)
-
-	game_loop()
 
 def car(x,y):
 	#display car on screen

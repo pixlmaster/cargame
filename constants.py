@@ -12,3 +12,5 @@ red = (255,0,0)
 #car dimensions
 car_width=73
 car_height=86
+
+nu_blocks=1
