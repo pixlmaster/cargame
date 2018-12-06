@@ -23,9 +23,25 @@ def message_display(text):
 
 def crash():
 	#message on crashing
-	message_display("You Crashed")
+	largetext= pygame.font.Font('freesansbold.ttf',115)
+	textsurf,textrect= text_objects('You crashed',largetext)
+	textrect.center = (display_width/2),(display_height/2)		
+	gamedisplay.blit(textsurf, textrect)
+	while True:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				quit()
+		#gamedisplay.fill(white)
+		button("Play again!",smalltext,green,bright_green,125,400,200,100,"play")
+		button("Exit",smalltext,red,bright_red,475,400,200,100,"exit")
+		pygame.display.update()
+		clock.tick(15)
+
+pause=False
 
 def button(text,font,color1,color2,rectx,recty,rectw,recth,action=None):
+	global pause
 	click= pygame.mouse.get_pressed()
 	if mouse_display(rectx,recty,rectw,recth):
 		pygame.draw.rect(gamedisplay,color2, (rectx,recty,rectw,recth))
@@ -35,6 +51,8 @@ def button(text,font,color1,color2,rectx,recty,rectw,recth,action=None):
 			elif action == "exit":
 				pygame.quit()
 				quit()
+			elif action == "unpause":
+				pause=False
 
 			
 	else:
@@ -42,6 +60,23 @@ def button(text,font,color1,color2,rectx,recty,rectw,recth,action=None):
 	textsurf, textrect = text_objects(text,smalltext)
 	textrect.center= (rectx + (rectw)/2, recty +(recth)/2)
 	gamedisplay.blit(textsurf,textrect) 
+
+def paused():
+	global pause
+	while pause:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				quit()
+		#gamedisplay.fill(white)
+		largetext= pygame.font.Font('freesansbold.ttf',115)
+		textsurf,textrect= text_objects('Pause',largetext)
+		textrect.center = (display_width/2),(display_height/4)		
+		gamedisplay.blit(textsurf, textrect)
+		button("Continue!",smalltext,green,bright_green,125,300,200,100,"unpause")
+		button("Exit",smalltext,red,bright_red,475,300,200,100,"exit")
+		pygame.display.update()
+		clock.tick(15)
 
 def game_intro():
 	intro =True
@@ -65,6 +100,7 @@ def game_intro():
 
 
 def game_loop():
+	global pause
 	#starting variables
 	x= (display_width * 0.45)
 	y= (display_height*0.8)
@@ -92,8 +128,11 @@ def game_loop():
 			if(event.type == pygame.KEYDOWN):
 				if event.key == pygame.K_LEFT:
 					x_change=-10
-				elif event.key ==pygame.K_RIGHT:
+				if event.key ==pygame.K_RIGHT:
 					x_change = 10
+				if event.key == pygame.K_p:
+					pause = True
+					paused()
 			#if key is not pressed
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
